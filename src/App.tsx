@@ -4,6 +4,7 @@ import icon from '../assets/icon.svg';
 import './App.global.css';
 import Datastore from "nedb-promises"
 import {ipcRenderer } from 'electron';
+import { Button } from '@material-ui/core';
 
 
 
@@ -76,6 +77,7 @@ const Hello = () => {
             </span>
             Donate
           </button>
+          <Button>asdas</Button>
         </a>
       </div>
     </div>
