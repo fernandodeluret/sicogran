@@ -11,10 +11,11 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
+//import MenuBuilder from './menu';
+
 
 export default class AppUpdater {
   constructor() {
@@ -77,6 +78,18 @@ const createWindow = async () => {
     },
   });
 
+  ipcMain.on('pantalla-completa', (event, arg) => {
+    // console.log(arg)
+    if(mainWindow?.isFullScreen()){
+      mainWindow?.setFullScreen(false);
+    }else{       
+      mainWindow?.setFullScreen(true);
+    }
+    // event.reply('asynchronous-reply', 'pong')
+  })
+
+  Menu.setApplicationMenu(null)
+
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // @TODO: Use 'ready-to-show' event
@@ -97,8 +110,8 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  //const menuBuilder = new MenuBuilder(mainWindow);
+  //menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.on('new-window', (event, url) => {
@@ -123,7 +136,11 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+app.whenReady().then(
+  createWindow
+).catch(
+  console.log
+);
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
