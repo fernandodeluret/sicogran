@@ -42,7 +42,8 @@ const Hello = () => {
 
   return (
     <div>
-      <div className="Hello">
+      <div style={{fontFamily: "Train One"}} className="Hello">
+        Sicogran
       </div>
       <Button onClick={()=>{history.push("/balanzas")}} >balanzas</Button>
     </div>
