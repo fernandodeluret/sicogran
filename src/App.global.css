@@ -12,11 +12,7 @@ body {
     #069faa 51.77%,
     rgb(6, 105, 219) 129.35%
   );
-  font-family: sans-serif;
   overflow-y: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 button {
@@ -54,7 +50,26 @@ a:hover {
 
 .Hello {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+  /* justify-content: center; */
+  align-items: baseline;
+  /* margin: 20px 0; */
+  font-size: 2em;
+  text-align: center;
+  padding-left: 60px;
+  padding-top: 8px;
+  flex-wrap: nowrap;
+  width: 600px;
+  /* background-color: red; */
+}
+
+
+.sicogran1{
+  font-family: 'Train One';
+  color: #50f3ff;
+}
+
+.sicogran2{
+  margin-right: 7px;
+  font-family: 'Poppins';
+  color: #fff;
 }
