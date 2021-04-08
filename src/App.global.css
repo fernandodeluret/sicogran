@@ -48,7 +48,7 @@ a:hover {
   text-decoration: none;
 }
 
-.Hello {
+.sicogran {
   display: flex;
   /* justify-content: center; */
   align-items: baseline;
@@ -73,3 +73,4 @@ a:hover {
   font-family: 'Poppins';
   color: #fff;
 }
+
