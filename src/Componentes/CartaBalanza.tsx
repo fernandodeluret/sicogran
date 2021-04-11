@@ -8,6 +8,7 @@ import Balanza from '../img/balanza.svg'
 const useStyles1 = makeStyles({
   cartabalanza: {
     width: '205px',
+    height: '290px',
     margin: '10px',
     marginTop: '30px',
     padding:'15px 15px 10px 15px',
@@ -36,7 +37,7 @@ const useStyles1 = makeStyles({
     marginBottom:'20px',
     stroke:'#ffffff80',
     strokeMiterlimit: 10,
-    strokeWidth: '3px',
+    strokeWidth: '7px',
   }
 })
 

@@ -1,6 +1,8 @@
 import React, { useState } from "react"
-import { List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, Switch, withStyles } from "@material-ui/core"
+import { List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, Snackbar, Switch, withStyles } from "@material-ui/core"
 import Volver from '../Componentes/Volver'
+import { Alert } from "@material-ui/lab"
+import Datastore from "nedb-promises"
 
 
 const SwitchPersonalizado = withStyles({
@@ -25,8 +27,10 @@ const SwitchPersonalizado = withStyles({
 
 
 
-export default function Balanzas(){
-  let [prendido,setprendido] = useState({'1':false, '2':false, '3':false})
+export default function Balanzas(props:any){
+  let balanzasConectadas = props.balanzasConectadas
+  let setbalanzasConectadas = props.setbalanzasConectadas
+  let [abrirAlerta,setabrirAlerta] = useState({abierta: false, tipo:'success', msj: ''})
 
   const useStyles = makeStyles({
     luzPrendida: {
@@ -45,12 +49,34 @@ export default function Balanzas(){
     }
   })
   let clases = useStyles()
+  let [conexionWS,setconexionWS] = useState()
 
-  let conectarBalanza = (event, id)=>{
-    if(prendido[id]){
-      setprendido({...prendido, [id]:false} )
+  let conectarBalanza = (event:any, id:any)=>{
+    if(balanzasConectadas[id]){
+      conexionWS.close()
+      setbalanzasConectadas({...balanzasConectadas, [id]:false} )
     }else{
-      setprendido({...prendido, [id]:true} )
+      // INICIAR CONEXION WS
+      let connection = new WebSocket('ws://192.168.1.202/ws', ['arduino']);
+      setconexionWS(connection)
+      connection.onopen = async function () {
+        console.log('Connected: ');
+        setbalanzasConectadas({...balanzasConectadas, [id]:true} )
+        // ENVIO LOS DATOS DE LOS PRODUCTOS A LA BALANZA
+        let productosdb = Datastore.create('database/productos.db')
+        let data = await productosdb.find({})
+        connection.send(JSON.stringify({productos: data }));
+      };
+      connection.onerror = function (error:any) {
+        // console.log('WebSocket Error ', error);
+        setabrirAlerta({abierta: true, tipo:'error', msj: 'Ha ocurrido un error al intentar conectar la balanza'})
+      };
+      connection.onmessage = function (e:any) {
+        // console.log('Server: ', e.data);
+      };
+      connection.onclose = ()=>{
+        // console.log('cerrada')
+      }
     }
   }
 
@@ -61,44 +87,22 @@ export default function Balanzas(){
     <List style={{width:'400px', marginLeft:'20px'}} >
       <ListItem button>
         <ListItemIcon>
-          <div className={prendido['1']?clases.luzPrendida:clases.luzApagada} ></div>
+          <div className={balanzasConectadas['1']?clases.luzPrendida:clases.luzApagada} ></div>
         </ListItemIcon>
         <ListItemText>Balanza</ListItemText>
         <ListItemSecondaryAction>
           <SwitchPersonalizado
-            checked={prendido['1']}
+            checked={balanzasConectadas['1']}
             onChange={ (event)=>conectarBalanza(event,'1') }
           />
         </ListItemSecondaryAction>
       </ListItem>
 
-      <ListItem button>
-        <ListItemIcon>
-        <div className={prendido['2']?clases.luzPrendida:clases.luzApagada} ></div>
-        </ListItemIcon>
-        <ListItemText>Balanza</ListItemText>
-        <ListItemSecondaryAction>
-        <SwitchPersonalizado
-            checked={prendido['2']}
-            onChange={ (event)=>conectarBalanza(event,'2') }
-          />
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-        <div className={prendido['3']?clases.luzPrendida:clases.luzApagada} ></div>
-        </ListItemIcon>
-        <ListItemText>Balanza</ListItemText>
-        <ListItemSecondaryAction>
-        <SwitchPersonalizado
-            checked={prendido['3']}
-            onChange={ (event)=>conectarBalanza(event,'3') }
-          />
-        </ListItemSecondaryAction>
-      </ListItem>
-
-
     </List>
+
+    <Snackbar open={abrirAlerta.abierta} autoHideDuration={2000} onClose={()=>setabrirAlerta({...abrirAlerta, abierta:false})} >
+      <Alert severity={abrirAlerta.tipo} variant="filled" elevation={6} >{abrirAlerta.msj}</Alert>
+    </Snackbar>
   </div>
   )
 }

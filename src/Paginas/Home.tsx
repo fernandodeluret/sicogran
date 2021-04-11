@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import '../App.global.css';
-import Datastore from "nedb-promises"
 import {ipcRenderer } from 'electron';
 
 import CartaBalanza from '../Componentes/CartaBalanza'
@@ -13,15 +12,6 @@ export default () => {
 
 
   useEffect(()=>{
-    async function funcion1(){
-      let datastore = Datastore.create('database/db1.db')
-      // const datastore = remote.getGlobal('datastore')
-      await datastore.insert({ doc: {campo1:"valor1"} })
-      let data = await datastore.find({})
-      console.log('find:', data)
-    }
-    // funcion1()
-
     window.addEventListener('keyup', (e)=>{
       if( (e.altKey && e.key==='Enter')){
         // PARA CAMBIAR A PANTALLA COMPLETA

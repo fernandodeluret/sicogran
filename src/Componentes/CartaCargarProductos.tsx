@@ -2,13 +2,14 @@ import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
 
-import Balanza from '../img/balanza.svg'
+import Productos from '../img/productos.svg'
 
 
 const useStyles1 = makeStyles({
   cartabalanza: {
     width: '205px',
-    margin: '10px',
+    height: '290px',
+    margin: '15px',
     marginTop: '30px',
     padding:'15px 15px 10px 15px',
     backgroundColor: 'hsla(0,100%,100%,.08)',
@@ -24,6 +25,7 @@ const useStyles1 = makeStyles({
       cursor: 'pointer',
       '& svg':{
         stroke:'#fff',
+        strokeWidth: '1px',
       }
     },
   },
@@ -33,10 +35,11 @@ const useStyles1 = makeStyles({
   },
   balanzaSvg:{
     fill:'none',
-    marginBottom:'20px',
-    stroke:'#ffffff80',
+    marginTop: '12px',
+    marginBottom:'18px',
+    stroke:'#ffffff30',
     strokeMiterlimit: 10,
-    strokeWidth: '3px',
+    strokeWidth: '1px',
   }
 })
 
@@ -51,7 +54,7 @@ export default ()=>{
   return(
     <Box onClick={irAbalanzas}>
     <Grid className={clases.cartabalanza} container item direction='column' justify='center'>
-      <Balanza className={clases.balanzaSvg} />
+      <Productos className={clases.balanzaSvg} />
       <Typography className={clases.texto1} >PRODUCTOS</Typography>
     </Grid>
     </Box>
