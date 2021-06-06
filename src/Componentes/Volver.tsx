@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 
 
 
-export default ()=>{
+export default (props)=>{
   let history = useHistory()
   const useStyles = makeStyles({
     volver: {
@@ -21,6 +21,6 @@ export default ()=>{
 
 
   return(
-    <ArrowBackRounded className={clases.volver} onClick={()=>{history.goBack()}} />
+    <ArrowBackRounded className={clases.volver} onClick={()=>{history.push(props.ruta)}} />
   )
 }

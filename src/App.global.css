@@ -64,13 +64,18 @@ a:hover {
 
 
 .sicogran1{
-  font-family: 'Train One';
-  color: #50f3ff;
+  /* font-family: 'Train One'; */
+  font-family: 'Poppins';
+  font-weight: 500;
+  color: rgba(164, 255, 255, 1);
 }
 
 .sicogran2{
   margin-right: 7px;
   font-family: 'Poppins';
+  font-weight: 100;
   color: #fff;
 }
+
+
 

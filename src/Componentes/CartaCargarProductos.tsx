@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 
 import Productos from '../img/productos.svg'
-
+ 
 
 const useStyles1 = makeStyles({
   cartabalanza: {

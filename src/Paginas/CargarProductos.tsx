@@ -38,10 +38,10 @@ const InputPersonalizado = withStyles({
 
 
 
-export default ()=>{
+export default (props)=>{
 
   let [producto,setproducto] = useState({nombre:'',precio:'',codigo:''})
-  let [abrirAlerta,setabrirAlerta] = useState({abierta: false, tipo:'success', msj: ''})
+  let {abrirAlerta, setabrirAlerta} = props
 
   let cambioInput = (e:any,campo:string)=>{
     setproducto({...producto,[campo]: e.target.value})
@@ -75,13 +75,13 @@ export default ()=>{
     <div>
       <AppBar style={{backgroundColor:'hsla(0,100%,80%,0.15)'}} >
         <Toolbar>
-          <Volver />
+          <Volver ruta="/listaproductos" />
           <Typography variant="h6" style={{marginLeft:'20px'}} >Cargar Nuevo Producto</Typography>
         </Toolbar>
       </AppBar>
       <form noValidate autoComplete="off" >
       <Grid container direction="column" alignItems="center" style={{width:'500px', height:'70vh', margin:'auto', marginTop:'100px', backgroundColor:'#ffffff20',borderRadius:'7px'}} >
-      <InputPersonalizado variant='outlined' label="Código" type="number" style={{marginTop:'30px', width:'60%'}} value={producto.codigo} onChange={(e)=>cambioInput(e,'codigo')} />
+        <InputPersonalizado variant='outlined' label="Código" type="number" style={{marginTop:'30px', width:'60%'}} value={producto.codigo} onChange={(e)=>cambioInput(e,'codigo')} />
         <InputPersonalizado spellCheck="false" variant='outlined' label="Nombre del producto" style={{marginTop:'70px', width:'60%'}} value={producto.nombre} onChange={(e)=>cambioInput(e,'nombre')} />
         <InputPersonalizado variant='outlined' label="Precio por Kg" type="number" style={{marginTop:'30px', width:'60%'}} value={producto.precio} onChange={(e)=>cambioInput(e,'precio')} />
         <Button variant='outlined' style={{color:'white', border:'1px solid #ffffff60', marginTop:'50px', width:'60%'}} onClick={guardarProductosEnBD} >Agregar</Button>
@@ -90,7 +90,14 @@ export default ()=>{
 
 
       <Snackbar open={abrirAlerta.abierta} autoHideDuration={2000} onClose={()=>setabrirAlerta({...abrirAlerta, abierta:false})} >
-        <Alert severity={abrirAlerta.tipo} variant="filled" elevation={6} >{abrirAlerta.msj}</Alert>
+        <Alert 
+          // @ts-ignore
+          severity={abrirAlerta.tipo} 
+          variant="filled" 
+          elevation={6} 
+        >
+          {abrirAlerta.msj}
+        </Alert>
       </Snackbar>
     </div>
   )
