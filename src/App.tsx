@@ -24,7 +24,7 @@ export default function App() {
   let [abrirAlerta,setabrirAlerta] = useState({abierta: false, tipo:'success', msj: ''})
   let [conexionWS, setconexionWS] = useState()
   let [accessToken, setaccessToken] = useState()
-  let [IP, setIP] = useState('192.168.100.121')
+  let [IP, setIP] = useState('192.168.100.141')
 
 
   useEffect(()=>{
